@@ -1,0 +1,103 @@
+#include<iostream>
+#include<vector>
+#include<string>
+
+using namespace std;
+
+class Student {
+public:
+    string name;
+    vector<string> courses;
+
+    Student(string n) {
+        name = n;
+    }
+};
+
+int main() {
+    vector<Student> students;
+    int choice;
+
+    while (true) {
+        cout << "\n=== Student Management System ===" << endl;
+        cout << "1. Add Student" << endl;
+        cout << "2. Delete Student" << endl;
+        cout << "3. Add Course to Student" << endl;
+        cout << "4. Delete Course from Student" << endl;
+        cout << "5. Display All Students" << endl;
+        cout << "6. Exit" << endl;
+        cout << "Choose an option: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            string n;
+            cout << "Enter student name: ";
+            cin >> n;
+            students.push_back(Student(n));
+            cout << "Student \"" << n << "\" added." << endl;
+        } 
+        else if (choice == 2) {
+            string n;
+            cout << "Enter student name: ";
+            cin >> n;
+            for (int i = 0; i < students.size(); i++) {
+                if (students[i].name == n) {
+                    students.erase(students.begin() + i);
+                    cout << "Student \"" << n << "\" deleted." << endl;
+                    break;
+                }
+            }
+        } 
+        else if (choice == 3) {
+            string n, c;
+            cout << "Enter student name: ";
+            cin >> n;
+            for (int i = 0; i < students.size(); i++) {
+                if (students[i].name == n) {
+                    cout << "Enter course name: ";
+                    cin.ignore();
+                    getline(cin, c);
+                    students[i].courses.push_back(c);
+                    cout << "Course \"" << c << "\" added to " << n << "." << endl;
+                    break;
+                }
+            }
+        } 
+        else if (choice == 4) {
+            string n, c;
+            cout << "Enter student name: ";
+            cin >> n;
+            for (int i = 0; i < students.size(); i++) {
+                if (students[i].name == n) {
+                    cout << "Enter course name: ";
+                    cin.ignore();
+                    getline(cin, c);
+                    for (int j = 0; j < students[i].courses.size(); j++) {
+                        if (students[i].courses[j] == c) {
+                            students[i].courses.erase(students[i].courses.begin() + j);
+                            cout << "Course \"" << c << "\" deleted from " << n << "." << endl;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        } 
+        else if (choice == 5) {
+            for (int i = 0; i < students.size(); i++) {
+                cout << "Student: " << students[i].name << endl;
+                cout << "  Courses: ";
+                for (int j = 0; j < students[i].courses.size(); j++) {
+                    cout << students[i].courses[j] << (j + 1 < students[i].courses.size() ? ", " : "");
+                }
+                cout << endl;
+            }
+        } 
+        else if (choice == 6) {
+            cout << "Goodbye!" << endl;
+            break;
+        }
+    }
+
+    return 0;
+}
